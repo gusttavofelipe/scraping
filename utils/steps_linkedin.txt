@@ -1,0 +1,24 @@
+    # entrar no site
+    driver.access('https://www.google.com')
+    driver.select_element(By.NAME, 'q')
+    driver.send_keys('linkedin')
+    driver.enter()
+    driver.click_element(
+        By.CSS_SELECTOR,
+        '#rso > div.hlcw0c > div > div > div > div > div >\
+        div > div > div.yuRUbf > div > span > a'        
+        )
+    
+    # preencher informações e entrar
+    driver.select_element(By.NAME, 'session_key')
+    driver.send_keys(env.EMAIL)
+    driver.select_element(By.NAME, 'session_password')
+    driver.send_keys(env.PASSWORD)
+    driver.select_element(
+        By.XPATH,
+        '//*[@id="main-content"]/section[1]/div/div/form/div[2]/button'
+        )
+    driver.enter()
+
+    # pesquisar vagas
+    driver.click_element(By.XPATH, '//*[@id="global-nav"]/div/nav/ul/li[3]/a')
