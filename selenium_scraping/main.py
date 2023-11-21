@@ -123,16 +123,40 @@ if __name__ == '__main__':
 
     # ACESSAR DISCIPLINA
     # pega a section que contem todos os cards de disciplina
-    disciplines_parent = driver.find_element(By.XPATH,'//*[@id="app"]/section')
+    disciplines_parent = driver.find_element(By.XPATH,'//*[@id="app"]/section', 14)
     # pega todos os elementos que indicam o progresso da disciplina
     progress_bar = disciplines_parent.find_elements(By.CLASS_NAME, 'css-1wp63ts')
     # EM ANDAMENTO - pega todos os botões de abrir a disciplina 
     disciplines = disciplines_parent.find_elements(By.ID, 'btn-acessar-disciplina')
+
+    # print(len(disciplines)) #10
+    # print(len(progress_bar)) #11
+
+    if len(disciplines) > len(progress_bar):
+        iteravel = disciplines
+    else:
+        iteravel = progress_bar
+
+    disciplines_index = []
+    progress_bar_index = []
+
+    for index in range(len(iteravel)):
+        count = index
+        try:
+            if 'Acessar' in disciplines[count].text:
+                # print(disciplines[count].text)
+                disciplines_index.append(count)
+
+            if '%' in progress_bar[count].text and '100%' not in progress_bar[count].text:
+                # print(progress_bar[count].text)
+                progress_bar_index.append(count)
+
+        except IndexError:
+            break
+
+
+    print("Disciplines IDs:", disciplines_index)
+    print("Progress Bar IDs:", progress_bar_index)
     
-    # encontra disciplinas que não estão completas
-    for index in range(len(progress_bar)):
-        if '%' in progress_bar[index].text:
-            if '100%' not in progress_bar[index].text:
-                print(f'text = {progress_bar[index].text} --- index = {index}')
 
     logger.info('Scraping finalizado')
